@@ -49,7 +49,7 @@ message DescribeKeywordV1Response {
 }
 
 message CreateKeywordV1Request {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 255}];
 }
 
 message CreateKeywordV1Response {
