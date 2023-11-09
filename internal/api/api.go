@@ -1,14 +1,8 @@
 package api
 
 import (
-    "context"
-
     "github.com/prometheus/client_golang/prometheus"
     "github.com/prometheus/client_golang/prometheus/promauto"
-
-    "github.com/rs/zerolog/log"
-    "google.golang.org/grpc/codes"
-    "google.golang.org/grpc/status"
 
     "github.com/execut/ozon-keyword-api/internal/repo"
 
@@ -30,55 +24,4 @@ type ozonAPI struct {
 // NewKeywordAPI returns api of ozon-keyword-api service
 func NewKeywordAPI(r repo.Repo) pb.OzonKeywordApiServiceServer {
     return &ozonAPI{repo: r}
-}
-
-func (o *ozonAPI) DescribeKeywordV1(
-    ctx context.Context,
-    req *pb.DescribeKeywordV1Request,
-) (*pb.DescribeKeywordV1Response, error) {
-
-    if err := req.Validate(); err != nil {
-        log.Error().Err(err).Msg("DescribeKeywordV1 - invalid argument")
-
-        return nil, status.Error(codes.InvalidArgument, err.Error())
-    }
-
-    keyword, err := o.repo.DescribeKeyword(ctx, req.KeywordId)
-    if err != nil {
-        log.Error().Err(err).Msg("DescribeKeywordV1 -- failed")
-
-        return nil, status.Error(codes.Internal, err.Error())
-    }
-
-    if keyword == nil {
-        log.Debug().Uint64("keywordId", req.KeywordId).Msg("keyword not found")
-        totalKeywordNotFound.Inc()
-
-        return nil, status.Error(codes.NotFound, "keyword not found")
-    }
-
-    log.Debug().Msg("DescribeKeywordV1 - success")
-
-    return &pb.DescribeKeywordV1Response{
-        Value: &pb.Keyword{
-            Id:   keyword.ID,
-            Name: keyword.Name,
-        },
-    }, nil
-}
-
-func (o *ozonAPI) ListKeywordV1(ctx context.Context, req *pb.ListKeywordV1Request) (*pb.ListKeywordV1Response, error) {
-    log.Debug().Msg("ListKeywordV1")
-
-    return nil, status.Error(codes.Unimplemented, "ListKeywordV1 not implemented")
-}
-
-func (o *ozonAPI) RemoveKeywordV1(ctx context.Context, req *pb.RemoveKeywordV1Request) (*pb.RemoveKeywordV1Response, error) {
-    log.Debug().Msg("RemoveKeywordV1")
-    return nil, status.Error(codes.Unimplemented, "RemoveKeywordV1 not implemented")
-}
-
-func (o *ozonAPI) CreateKeywordV1(ctx context.Context, req *pb.CreateKeywordV1Request) (*pb.CreateKeywordV1Response, error) {
-    log.Debug().Msg("CreateKeywordV1")
-    return nil, status.Error(codes.Unimplemented, "CreateKeywordV1 not implemented")
 }
