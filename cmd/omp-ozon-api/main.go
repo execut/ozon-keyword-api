@@ -1,14 +1,14 @@
 package main
 
 import (
-    "github.com/execut/omp-ozon-api/internal/app/repo"
-    "github.com/execut/omp-ozon-api/internal/app/sender"
+    "github.com/execut/ozon-keyword-api/internal/app/repo"
+    "github.com/execut/ozon-keyword-api/internal/app/sender"
     "os"
     "os/signal"
     "syscall"
     "time"
 
-    "github.com/execut/omp-ozon-api/internal/app/retranslator"
+    "github.com/execut/ozon-keyword-api/internal/app/retranslator"
 )
 
 func main() {

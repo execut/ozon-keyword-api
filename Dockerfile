@@ -1,8 +1,8 @@
 # Builder
 
-ARG GITHUB_PATH=github.com/ozonmp/omp-template-api
+ARG GITHUB_PATH=github.com/execut/ozon-keyword-api
 
-FROM golang:1.16-alpine AS builder
+FROM golang:1.21.4-alpine AS builder
 
 WORKDIR /home/${GITHUB_PATH}
 

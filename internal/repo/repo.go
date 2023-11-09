@@ -1,28 +1,28 @@
 package repo
 
 import (
-	"context"
+    "context"
 
-	"github.com/jmoiron/sqlx"
+    "github.com/jmoiron/sqlx"
 
-	"github.com/ozonmp/omp-template-api/internal/model"
+    "github.com/execut/ozon-keyword-api/internal/model"
 )
 
-// Repo is DAO for Template
+// Repo is DAO for Keyword
 type Repo interface {
-	DescribeTemplate(ctx context.Context, templateID uint64) (*model.Template, error)
+    DescribeKeyword(ctx context.Context, ozonID uint64) (*model.Keyword, error)
 }
 
 type repo struct {
-	db        *sqlx.DB
-	batchSize uint
+    db        *sqlx.DB
+    batchSize uint
 }
 
 // NewRepo returns Repo interface
 func NewRepo(db *sqlx.DB, batchSize uint) Repo {
-	return &repo{db: db, batchSize: batchSize}
+    return &repo{db: db, batchSize: batchSize}
 }
 
-func (r *repo) DescribeTemplate(ctx context.Context, templateID uint64) (*model.Template, error) {
-	return nil, nil
+func (r *repo) DescribeKeyword(ctx context.Context, ozonID uint64) (*model.Keyword, error) {
+    return nil, nil
 }
