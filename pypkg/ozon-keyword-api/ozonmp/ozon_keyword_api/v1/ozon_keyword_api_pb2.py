@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'ZHgithub.com/execut/ozon-keyword-api/pkg/ozon-keyword-api;ozon_keyword_api',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n1ozonmp/ozon_keyword_api/v1/ozon_keyword_api.proto\x12\x1aozonmp.ozon_keyword_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"a\n\x07Keyword\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x10\n\x03\x66oo\x18\x02 \x01(\x04R\x03\x66oo\x12\x34\n\x07\x63reated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"B\n\x18\x44\x65scribeKeywordV1Request\x12&\n\nkeyword_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tkeywordId\"V\n\x19\x44\x65scribeKeywordV1Response\x12\x39\n\x05value\x18\x01 \x01(\x0b\x32#.ozonmp.ozon_keyword_api.v1.KeywordR\x05value2\xba\x01\n\x15OzonKeywordApiService\x12\xa0\x01\n\x11\x44\x65scribeKeywordV1\x12\x34.ozonmp.ozon_keyword_api.v1.DescribeKeywordV1Request\x1a\x35.ozonmp.ozon_keyword_api.v1.DescribeKeywordV1Response\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/v1/ozons/{keyword_id}BJZHgithub.com/execut/ozon-keyword-api/pkg/ozon-keyword-api;ozon_keyword_apib\x06proto3'
+  serialized_pb=b'\n1ozonmp/ozon_keyword_api/v1/ozon_keyword_api.proto\x12\x1aozonmp.ozon_keyword_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"c\n\x07Keyword\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x34\n\x07\x63reated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"B\n\x18\x44\x65scribeKeywordV1Request\x12&\n\nkeyword_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tkeywordId\"V\n\x19\x44\x65scribeKeywordV1Response\x12\x39\n\x05value\x18\x01 \x01(\x0b\x32#.ozonmp.ozon_keyword_api.v1.KeywordR\x05value\",\n\x16\x43reateKeywordV1Request\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\"T\n\x17\x43reateKeywordV1Response\x12\x39\n\x05value\x18\x01 \x01(\x0b\x32#.ozonmp.ozon_keyword_api.v1.KeywordR\x05value\"\x16\n\x14ListKeywordV1Request\"R\n\x15ListKeywordV1Response\x12\x39\n\x05items\x18\x01 \x03(\x0b\x32#.ozonmp.ozon_keyword_api.v1.KeywordR\x05items\"@\n\x16RemoveKeywordV1Request\x12&\n\nkeyword_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\tkeywordId\"/\n\x17RemoveKeywordV1Response\x12\x14\n\x05\x66ound\x18\x01 \x01(\x08R\x05\x66ound2\x80\x05\n\x15OzonKeywordApiService\x12\xa3\x01\n\x11\x44\x65scribeKeywordV1\x12\x34.ozonmp.ozon_keyword_api.v1.DescribeKeywordV1Request\x1a\x35.ozonmp.ozon_keyword_api.v1.DescribeKeywordV1Response\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/keywords/{keyword_id}\x12\x93\x01\n\x0f\x43reateKeywordV1\x12\x32.ozonmp.ozon_keyword_api.v1.CreateKeywordV1Request\x1a\x33.ozonmp.ozon_keyword_api.v1.CreateKeywordV1Response\"\x17\x82\xd3\xe4\x93\x02\x11:\x01*\"\x0c/v1/keywords\x12\x8a\x01\n\rListKeywordV1\x12\x30.ozonmp.ozon_keyword_api.v1.ListKeywordV1Request\x1a\x31.ozonmp.ozon_keyword_api.v1.ListKeywordV1Response\"\x14\x82\xd3\xe4\x93\x02\x0e\x12\x0c/v1/keywords\x12\x9d\x01\n\x0fRemoveKeywordV1\x12\x32.ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Request\x1a\x33.ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Response\"!\x82\xd3\xe4\x93\x02\x1b*\x19/v1/keywords/{keyword_id}BJZHgithub.com/execut/ozon-keyword-api/pkg/ozon-keyword-api;ozon_keyword_apib\x06proto3'
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -45,12 +45,12 @@ _KEYWORD = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, json_name='id', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='foo', full_name='ozonmp.ozon_keyword_api.v1.Keyword.foo', index=1,
-      number=2, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
+      name='name', full_name='ozonmp.ozon_keyword_api.v1.Keyword.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, json_name='foo', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, json_name='name', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='created', full_name='ozonmp.ozon_keyword_api.v1.Keyword.created', index=2,
       number=3, type=11, cpp_type=10, label=1,
@@ -71,7 +71,7 @@ _KEYWORD = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=169,
-  serialized_end=266,
+  serialized_end=268,
 )
 
 
@@ -102,8 +102,8 @@ _DESCRIBEKEYWORDV1REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=268,
-  serialized_end=334,
+  serialized_start=270,
+  serialized_end=336,
 )
 
 
@@ -134,15 +134,208 @@ _DESCRIBEKEYWORDV1RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=336,
-  serialized_end=422,
+  serialized_start=338,
+  serialized_end=424,
+)
+
+
+_CREATEKEYWORDV1REQUEST = _descriptor.Descriptor(
+  name='CreateKeywordV1Request',
+  full_name='ozonmp.ozon_keyword_api.v1.CreateKeywordV1Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='ozonmp.ozon_keyword_api.v1.CreateKeywordV1Request.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='name', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=426,
+  serialized_end=470,
+)
+
+
+_CREATEKEYWORDV1RESPONSE = _descriptor.Descriptor(
+  name='CreateKeywordV1Response',
+  full_name='ozonmp.ozon_keyword_api.v1.CreateKeywordV1Response',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='value', full_name='ozonmp.ozon_keyword_api.v1.CreateKeywordV1Response.value', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='value', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=472,
+  serialized_end=556,
+)
+
+
+_LISTKEYWORDV1REQUEST = _descriptor.Descriptor(
+  name='ListKeywordV1Request',
+  full_name='ozonmp.ozon_keyword_api.v1.ListKeywordV1Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=558,
+  serialized_end=580,
+)
+
+
+_LISTKEYWORDV1RESPONSE = _descriptor.Descriptor(
+  name='ListKeywordV1Response',
+  full_name='ozonmp.ozon_keyword_api.v1.ListKeywordV1Response',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='items', full_name='ozonmp.ozon_keyword_api.v1.ListKeywordV1Response.items', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='items', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=582,
+  serialized_end=664,
+)
+
+
+_REMOVEKEYWORDV1REQUEST = _descriptor.Descriptor(
+  name='RemoveKeywordV1Request',
+  full_name='ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='keyword_id', full_name='ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Request.keyword_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\0042\002 \000', json_name='keywordId', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=666,
+  serialized_end=730,
+)
+
+
+_REMOVEKEYWORDV1RESPONSE = _descriptor.Descriptor(
+  name='RemoveKeywordV1Response',
+  full_name='ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Response',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='found', full_name='ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Response.found', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='found', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=732,
+  serialized_end=779,
 )
 
 _KEYWORD.fields_by_name['created'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _DESCRIBEKEYWORDV1RESPONSE.fields_by_name['value'].message_type = _KEYWORD
+_CREATEKEYWORDV1RESPONSE.fields_by_name['value'].message_type = _KEYWORD
+_LISTKEYWORDV1RESPONSE.fields_by_name['items'].message_type = _KEYWORD
 DESCRIPTOR.message_types_by_name['Keyword'] = _KEYWORD
 DESCRIPTOR.message_types_by_name['DescribeKeywordV1Request'] = _DESCRIBEKEYWORDV1REQUEST
 DESCRIPTOR.message_types_by_name['DescribeKeywordV1Response'] = _DESCRIBEKEYWORDV1RESPONSE
+DESCRIPTOR.message_types_by_name['CreateKeywordV1Request'] = _CREATEKEYWORDV1REQUEST
+DESCRIPTOR.message_types_by_name['CreateKeywordV1Response'] = _CREATEKEYWORDV1RESPONSE
+DESCRIPTOR.message_types_by_name['ListKeywordV1Request'] = _LISTKEYWORDV1REQUEST
+DESCRIPTOR.message_types_by_name['ListKeywordV1Response'] = _LISTKEYWORDV1RESPONSE
+DESCRIPTOR.message_types_by_name['RemoveKeywordV1Request'] = _REMOVEKEYWORDV1REQUEST
+DESCRIPTOR.message_types_by_name['RemoveKeywordV1Response'] = _REMOVEKEYWORDV1RESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Keyword = _reflection.GeneratedProtocolMessageType('Keyword', (_message.Message,), {
@@ -166,9 +359,52 @@ DescribeKeywordV1Response = _reflection.GeneratedProtocolMessageType('DescribeKe
   })
 _sym_db.RegisterMessage(DescribeKeywordV1Response)
 
+CreateKeywordV1Request = _reflection.GeneratedProtocolMessageType('CreateKeywordV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _CREATEKEYWORDV1REQUEST,
+  '__module__' : 'ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.ozon_keyword_api.v1.CreateKeywordV1Request)
+  })
+_sym_db.RegisterMessage(CreateKeywordV1Request)
+
+CreateKeywordV1Response = _reflection.GeneratedProtocolMessageType('CreateKeywordV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _CREATEKEYWORDV1RESPONSE,
+  '__module__' : 'ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.ozon_keyword_api.v1.CreateKeywordV1Response)
+  })
+_sym_db.RegisterMessage(CreateKeywordV1Response)
+
+ListKeywordV1Request = _reflection.GeneratedProtocolMessageType('ListKeywordV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _LISTKEYWORDV1REQUEST,
+  '__module__' : 'ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.ozon_keyword_api.v1.ListKeywordV1Request)
+  })
+_sym_db.RegisterMessage(ListKeywordV1Request)
+
+ListKeywordV1Response = _reflection.GeneratedProtocolMessageType('ListKeywordV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _LISTKEYWORDV1RESPONSE,
+  '__module__' : 'ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.ozon_keyword_api.v1.ListKeywordV1Response)
+  })
+_sym_db.RegisterMessage(ListKeywordV1Response)
+
+RemoveKeywordV1Request = _reflection.GeneratedProtocolMessageType('RemoveKeywordV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _REMOVEKEYWORDV1REQUEST,
+  '__module__' : 'ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Request)
+  })
+_sym_db.RegisterMessage(RemoveKeywordV1Request)
+
+RemoveKeywordV1Response = _reflection.GeneratedProtocolMessageType('RemoveKeywordV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _REMOVEKEYWORDV1RESPONSE,
+  '__module__' : 'ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.ozon_keyword_api.v1.RemoveKeywordV1Response)
+  })
+_sym_db.RegisterMessage(RemoveKeywordV1Response)
+
 
 DESCRIPTOR._options = None
 _DESCRIBEKEYWORDV1REQUEST.fields_by_name['keyword_id']._options = None
+_REMOVEKEYWORDV1REQUEST.fields_by_name['keyword_id']._options = None
 
 _OZONKEYWORDAPISERVICE = _descriptor.ServiceDescriptor(
   name='OzonKeywordApiService',
@@ -177,8 +413,8 @@ _OZONKEYWORDAPISERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=425,
-  serialized_end=611,
+  serialized_start=782,
+  serialized_end=1422,
   methods=[
   _descriptor.MethodDescriptor(
     name='DescribeKeywordV1',
@@ -187,7 +423,37 @@ _OZONKEYWORDAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DESCRIBEKEYWORDV1REQUEST,
     output_type=_DESCRIBEKEYWORDV1RESPONSE,
-    serialized_options=b'\202\323\344\223\002\030\022\026/v1/ozons/{keyword_id}',
+    serialized_options=b'\202\323\344\223\002\033\022\031/v1/keywords/{keyword_id}',
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateKeywordV1',
+    full_name='ozonmp.ozon_keyword_api.v1.OzonKeywordApiService.CreateKeywordV1',
+    index=1,
+    containing_service=None,
+    input_type=_CREATEKEYWORDV1REQUEST,
+    output_type=_CREATEKEYWORDV1RESPONSE,
+    serialized_options=b'\202\323\344\223\002\021:\001*\"\014/v1/keywords',
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListKeywordV1',
+    full_name='ozonmp.ozon_keyword_api.v1.OzonKeywordApiService.ListKeywordV1',
+    index=2,
+    containing_service=None,
+    input_type=_LISTKEYWORDV1REQUEST,
+    output_type=_LISTKEYWORDV1RESPONSE,
+    serialized_options=b'\202\323\344\223\002\016\022\014/v1/keywords',
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='RemoveKeywordV1',
+    full_name='ozonmp.ozon_keyword_api.v1.OzonKeywordApiService.RemoveKeywordV1',
+    index=3,
+    containing_service=None,
+    input_type=_REMOVEKEYWORDV1REQUEST,
+    output_type=_REMOVEKEYWORDV1RESPONSE,
+    serialized_options=b'\202\323\344\223\002\033*\031/v1/keywords/{keyword_id}',
     create_key=_descriptor._internal_create_key,
   ),
 ])

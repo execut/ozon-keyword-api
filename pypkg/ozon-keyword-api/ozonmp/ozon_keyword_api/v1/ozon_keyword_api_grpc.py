@@ -21,6 +21,18 @@ class OzonKeywordApiServiceBase(abc.ABC):
     async def DescribeKeywordV1(self, stream: 'grpclib.server.Stream[ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.DescribeKeywordV1Request, ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.DescribeKeywordV1Response]') -> None:
         pass
 
+    @abc.abstractmethod
+    async def CreateKeywordV1(self, stream: 'grpclib.server.Stream[ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.CreateKeywordV1Request, ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.CreateKeywordV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def ListKeywordV1(self, stream: 'grpclib.server.Stream[ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.ListKeywordV1Request, ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.ListKeywordV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def RemoveKeywordV1(self, stream: 'grpclib.server.Stream[ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.RemoveKeywordV1Request, ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.RemoveKeywordV1Response]') -> None:
+        pass
+
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
             '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/DescribeKeywordV1': grpclib.const.Handler(
@@ -28,6 +40,24 @@ class OzonKeywordApiServiceBase(abc.ABC):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.DescribeKeywordV1Request,
                 ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.DescribeKeywordV1Response,
+            ),
+            '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/CreateKeywordV1': grpclib.const.Handler(
+                self.CreateKeywordV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.CreateKeywordV1Request,
+                ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.CreateKeywordV1Response,
+            ),
+            '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/ListKeywordV1': grpclib.const.Handler(
+                self.ListKeywordV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.ListKeywordV1Request,
+                ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.ListKeywordV1Response,
+            ),
+            '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/RemoveKeywordV1': grpclib.const.Handler(
+                self.RemoveKeywordV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.RemoveKeywordV1Request,
+                ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.RemoveKeywordV1Response,
             ),
         }
 
@@ -40,4 +70,22 @@ class OzonKeywordApiServiceStub:
             '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/DescribeKeywordV1',
             ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.DescribeKeywordV1Request,
             ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.DescribeKeywordV1Response,
+        )
+        self.CreateKeywordV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/CreateKeywordV1',
+            ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.CreateKeywordV1Request,
+            ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.CreateKeywordV1Response,
+        )
+        self.ListKeywordV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/ListKeywordV1',
+            ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.ListKeywordV1Request,
+            ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.ListKeywordV1Response,
+        )
+        self.RemoveKeywordV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.ozon_keyword_api.v1.OzonKeywordApiService/RemoveKeywordV1',
+            ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.RemoveKeywordV1Request,
+            ozonmp.ozon_keyword_api.v1.ozon_keyword_api_pb2.RemoveKeywordV1Response,
         )

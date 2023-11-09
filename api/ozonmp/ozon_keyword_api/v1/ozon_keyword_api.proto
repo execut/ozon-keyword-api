@@ -8,19 +8,35 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/execut/ozon-keyword-api/pkg/ozon-keyword-api;ozon_keyword_api";
 
-// OzonKeywordApiService - Service for working with ozons
+// OzonKeywordApiService - Service for working with keywords
 service OzonKeywordApiService {
-  // DescribeKeywordV1 - Describe a ozon
+  // DescribeKeywordV1 - Describe a keyword
   rpc DescribeKeywordV1(DescribeKeywordV1Request) returns (DescribeKeywordV1Response) {
     option (google.api.http) = {
-      get: "/v1/ozons/{keyword_id}"
+      get: "/v1/keywords/{keyword_id}"
+    };
+  }
+  rpc CreateKeywordV1(CreateKeywordV1Request) returns (CreateKeywordV1Response) {
+    option (google.api.http) = {
+      post: "/v1/keywords",
+      body: "*"
+    };
+  }
+  rpc ListKeywordV1(ListKeywordV1Request) returns (ListKeywordV1Response) {
+    option (google.api.http) = {
+      get: "/v1/keywords"
+    };
+  }
+  rpc RemoveKeywordV1(RemoveKeywordV1Request) returns (RemoveKeywordV1Response) {
+    option (google.api.http) = {
+      delete: "/v1/keywords/{keyword_id}"
     };
   }
 }
 
 message Keyword {
   uint64 id  = 1;
-  uint64 foo = 2;
+  string name = 2;
   google.protobuf.Timestamp created = 3;
 }
 
@@ -30,4 +46,27 @@ message DescribeKeywordV1Request {
 
 message DescribeKeywordV1Response {
   Keyword value = 1;
+}
+
+message CreateKeywordV1Request {
+  string name = 1;
+}
+
+message CreateKeywordV1Response {
+  Keyword value = 1;
+}
+
+message ListKeywordV1Request {
+}
+
+message ListKeywordV1Response {
+  repeated Keyword items = 1;
+}
+
+message RemoveKeywordV1Request {
+  uint64 keyword_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message RemoveKeywordV1Response {
+  bool found = 1;
 }

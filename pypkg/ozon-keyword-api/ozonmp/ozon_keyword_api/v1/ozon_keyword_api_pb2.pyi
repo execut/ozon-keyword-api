@@ -3,7 +3,9 @@
 isort:skip_file
 """
 import builtins
+import collections.abc
 import google.protobuf.descriptor
+import google.protobuf.internal.containers
 import google.protobuf.message
 import google.protobuf.timestamp_pb2
 import sys
@@ -20,21 +22,21 @@ class Keyword(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     ID_FIELD_NUMBER: builtins.int
-    FOO_FIELD_NUMBER: builtins.int
+    NAME_FIELD_NUMBER: builtins.int
     CREATED_FIELD_NUMBER: builtins.int
     id: builtins.int
-    foo: builtins.int
+    name: builtins.str
     @property
     def created(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     def __init__(
         self,
         *,
         id: builtins.int = ...,
-        foo: builtins.int = ...,
+        name: builtins.str = ...,
         created: google.protobuf.timestamp_pb2.Timestamp | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["created", b"created"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["created", b"created", "foo", b"foo", "id", b"id"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["created", b"created", "id", b"id", "name", b"name"]) -> None: ...
 
 global___Keyword = Keyword
 
@@ -69,3 +71,91 @@ class DescribeKeywordV1Response(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["value", b"value"]) -> None: ...
 
 global___DescribeKeywordV1Response = DescribeKeywordV1Response
+
+@typing_extensions.final
+class CreateKeywordV1Request(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    def __init__(
+        self,
+        *,
+        name: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["name", b"name"]) -> None: ...
+
+global___CreateKeywordV1Request = CreateKeywordV1Request
+
+@typing_extensions.final
+class CreateKeywordV1Response(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    VALUE_FIELD_NUMBER: builtins.int
+    @property
+    def value(self) -> global___Keyword: ...
+    def __init__(
+        self,
+        *,
+        value: global___Keyword | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["value", b"value"]) -> None: ...
+
+global___CreateKeywordV1Response = CreateKeywordV1Response
+
+@typing_extensions.final
+class ListKeywordV1Request(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    def __init__(
+        self,
+    ) -> None: ...
+
+global___ListKeywordV1Request = ListKeywordV1Request
+
+@typing_extensions.final
+class ListKeywordV1Response(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    ITEMS_FIELD_NUMBER: builtins.int
+    @property
+    def items(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Keyword]: ...
+    def __init__(
+        self,
+        *,
+        items: collections.abc.Iterable[global___Keyword] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["items", b"items"]) -> None: ...
+
+global___ListKeywordV1Response = ListKeywordV1Response
+
+@typing_extensions.final
+class RemoveKeywordV1Request(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    KEYWORD_ID_FIELD_NUMBER: builtins.int
+    keyword_id: builtins.int
+    def __init__(
+        self,
+        *,
+        keyword_id: builtins.int = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["keyword_id", b"keyword_id"]) -> None: ...
+
+global___RemoveKeywordV1Request = RemoveKeywordV1Request
+
+@typing_extensions.final
+class RemoveKeywordV1Response(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    FOUND_FIELD_NUMBER: builtins.int
+    found: builtins.bool
+    def __init__(
+        self,
+        *,
+        found: builtins.bool = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["found", b"found"]) -> None: ...
+
+global___RemoveKeywordV1Response = RemoveKeywordV1Response

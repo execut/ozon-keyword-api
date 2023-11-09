@@ -3,8 +3,8 @@ package model
 import "strconv"
 
 type Keyword struct {
-    ID  uint64
-    Foo uint64 `db:"foo"`
+    ID   uint64
+    Name string `db:"name"`
 }
 
 type EventType uint8

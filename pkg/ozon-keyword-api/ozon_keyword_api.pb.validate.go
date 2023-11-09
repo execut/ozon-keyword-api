@@ -42,7 +42,7 @@ func (m *Keyword) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Foo
+	// no validation rules for Name
 
 	if v, ok := interface{}(m.GetCreated()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -261,3 +261,441 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DescribeKeywordV1ResponseValidationError{}
+
+// Validate checks the field values on CreateKeywordV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateKeywordV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// CreateKeywordV1RequestValidationError is the validation error returned by
+// CreateKeywordV1Request.Validate if the designated constraints aren't met.
+type CreateKeywordV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateKeywordV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateKeywordV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateKeywordV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateKeywordV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateKeywordV1RequestValidationError) ErrorName() string {
+	return "CreateKeywordV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateKeywordV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateKeywordV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateKeywordV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateKeywordV1RequestValidationError{}
+
+// Validate checks the field values on CreateKeywordV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateKeywordV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateKeywordV1ResponseValidationError{
+				field:  "Value",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// CreateKeywordV1ResponseValidationError is the validation error returned by
+// CreateKeywordV1Response.Validate if the designated constraints aren't met.
+type CreateKeywordV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateKeywordV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateKeywordV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateKeywordV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateKeywordV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateKeywordV1ResponseValidationError) ErrorName() string {
+	return "CreateKeywordV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateKeywordV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateKeywordV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateKeywordV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateKeywordV1ResponseValidationError{}
+
+// Validate checks the field values on ListKeywordV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListKeywordV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ListKeywordV1RequestValidationError is the validation error returned by
+// ListKeywordV1Request.Validate if the designated constraints aren't met.
+type ListKeywordV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListKeywordV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListKeywordV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListKeywordV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListKeywordV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListKeywordV1RequestValidationError) ErrorName() string {
+	return "ListKeywordV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListKeywordV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListKeywordV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListKeywordV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListKeywordV1RequestValidationError{}
+
+// Validate checks the field values on ListKeywordV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListKeywordV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetItems() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListKeywordV1ResponseValidationError{
+					field:  fmt.Sprintf("Items[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListKeywordV1ResponseValidationError is the validation error returned by
+// ListKeywordV1Response.Validate if the designated constraints aren't met.
+type ListKeywordV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListKeywordV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListKeywordV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListKeywordV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListKeywordV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListKeywordV1ResponseValidationError) ErrorName() string {
+	return "ListKeywordV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListKeywordV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListKeywordV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListKeywordV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListKeywordV1ResponseValidationError{}
+
+// Validate checks the field values on RemoveKeywordV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveKeywordV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetKeywordId() <= 0 {
+		return RemoveKeywordV1RequestValidationError{
+			field:  "KeywordId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	return nil
+}
+
+// RemoveKeywordV1RequestValidationError is the validation error returned by
+// RemoveKeywordV1Request.Validate if the designated constraints aren't met.
+type RemoveKeywordV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveKeywordV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveKeywordV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveKeywordV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveKeywordV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveKeywordV1RequestValidationError) ErrorName() string {
+	return "RemoveKeywordV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveKeywordV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveKeywordV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveKeywordV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveKeywordV1RequestValidationError{}
+
+// Validate checks the field values on RemoveKeywordV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveKeywordV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Found
+
+	return nil
+}
+
+// RemoveKeywordV1ResponseValidationError is the validation error returned by
+// RemoveKeywordV1Response.Validate if the designated constraints aren't met.
+type RemoveKeywordV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveKeywordV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveKeywordV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveKeywordV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveKeywordV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveKeywordV1ResponseValidationError) ErrorName() string {
+	return "RemoveKeywordV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveKeywordV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveKeywordV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveKeywordV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveKeywordV1ResponseValidationError{}
