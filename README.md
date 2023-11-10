@@ -41,9 +41,9 @@ The Swagger UI is an open source project to visually render documentation for an
 - http://localhost:8082
 
 ```sh
-[I] ➜ grpc_cli call localhost:8082 DescribeKeywordV1 "id: 1"
+[I] ➜ grpc_cli call localhost:8082 DescribeKeywordV1 "keyword_id: 1"
 connecting to localhost:8082
-Rpc failed with status code 5, error message: ozon not found
+Rpc failed with status code 5, error message: keyword not found
 ```
 
 ### Gateway:
@@ -54,15 +54,15 @@ It reads protobuf service definitions and generates a reverse-proxy server which
 
 ```sh
 [I] ➜ curl -s -X 'POST' \
-  'http://localhost:8080/v1/ozons' \
+  'http://localhost:8080/v1/keywords' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "id": "1"
+  "keyword_id": "1"
 }' | jq .
 {
   "code": 5,
-  "message": "ozon not found",
+  "message": "keyword not found",
   "details": []
 }
 ```
