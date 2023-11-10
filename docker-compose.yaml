@@ -1,6 +1,19 @@
 version: "3.9"
 
 services:
+  nginx-proxy:
+    build:
+      context: deployments/nginx-proxy
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - ozonnw
+#    depends_on:
+#      - ozon-keyword-api
+#      - kafka
+    ports:
+        - 8080:8080
+
   ozon-keyword-api:
     build:
       context: .
@@ -20,7 +33,7 @@ services:
       - postgres
       - kafka
     ports:
-      - 8080:8080 # REST
+#      - 8080:8080 # REST
       - 8082:8082 # gRPC
       - 9100:9100 # Metrics prometheus
       - 8000:8000 # Status prometheus
