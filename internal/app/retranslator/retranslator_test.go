@@ -1,8 +1,8 @@
 package retranslator
 
 import (
-    "github.com/execut/omp-ozon-api/internal/app/repo"
-    "github.com/execut/omp-ozon-api/internal/mocks"
+    "github.com/execut/ozon-keyword-api/internal/app/repo"
+    "github.com/execut/ozon-keyword-api/internal/mocks"
     "go.uber.org/mock/gomock"
     "testing"
     "time"

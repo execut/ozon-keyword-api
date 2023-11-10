@@ -1,23 +1,23 @@
 package server
 
 import (
-	"fmt"
-	"net/http"
+    "fmt"
+    "net/http"
 
-	"github.com/ozonmp/omp-template-api/internal/config"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+    "github.com/execut/ozon-keyword-api/internal/config"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func createMetricsServer(cfg *config.Config) *http.Server {
-	addr := fmt.Sprintf("%s:%d", cfg.Metrics.Host, cfg.Metrics.Port)
+    addr := fmt.Sprintf("%s:%d", cfg.Metrics.Host, cfg.Metrics.Port)
 
-	mux := http.DefaultServeMux
-	mux.Handle(cfg.Metrics.Path, promhttp.Handler())
+    mux := http.DefaultServeMux
+    mux.Handle(cfg.Metrics.Path, promhttp.Handler())
 
-	metricsServer := &http.Server{
-		Addr:    addr,
-		Handler: mux,
-	}
+    metricsServer := &http.Server{
+        Addr:    addr,
+        Handler: mux,
+    }
 
-	return metricsServer
+    return metricsServer
 }

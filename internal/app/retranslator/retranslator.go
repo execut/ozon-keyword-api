@@ -1,11 +1,11 @@
 package retranslator
 
 import (
-    "github.com/execut/omp-ozon-api/internal/app/consumer"
-    "github.com/execut/omp-ozon-api/internal/app/producer"
-    "github.com/execut/omp-ozon-api/internal/app/repo"
-    "github.com/execut/omp-ozon-api/internal/app/sender"
-    "github.com/execut/omp-ozon-api/internal/model"
+    "github.com/execut/ozon-keyword-api/internal/app/consumer"
+    "github.com/execut/ozon-keyword-api/internal/app/producer"
+    "github.com/execut/ozon-keyword-api/internal/app/repo"
+    "github.com/execut/ozon-keyword-api/internal/app/sender"
+    "github.com/execut/ozon-keyword-api/internal/model"
     "github.com/gammazero/workerpool"
     "time"
 )

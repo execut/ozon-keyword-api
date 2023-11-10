@@ -2,8 +2,8 @@ package producer
 
 import (
     "errors"
-    "github.com/execut/omp-ozon-api/internal/mocks"
-    "github.com/execut/omp-ozon-api/internal/model"
+    "github.com/execut/ozon-keyword-api/internal/mocks"
+    "github.com/execut/ozon-keyword-api/internal/model"
     "github.com/gammazero/workerpool"
     "go.uber.org/mock/gomock"
     "gotest.tools/v3/assert"

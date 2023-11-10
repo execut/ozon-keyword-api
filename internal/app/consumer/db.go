@@ -2,8 +2,8 @@ package consumer
 
 import (
     "context"
-    "github.com/execut/omp-ozon-api/internal/app/repo"
-    "github.com/execut/omp-ozon-api/internal/model"
+    "github.com/execut/ozon-keyword-api/internal/app/repo"
+    "github.com/execut/ozon-keyword-api/internal/model"
     "sync"
     "time"
 )

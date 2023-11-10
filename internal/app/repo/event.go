@@ -3,7 +3,7 @@ package repo
 import (
     "errors"
     "fmt"
-    "github.com/execut/omp-ozon-api/internal/model"
+    "github.com/execut/ozon-keyword-api/internal/model"
     "sync"
     "time"
 )
