@@ -12,7 +12,7 @@ func (o *ozonAPI) CreateKeywordV1(ctx context.Context, req *ozon_keyword_api.Cre
     log.Debug().Msg("CreateKeywordV1")
 
     if err := req.Validate(); err != nil {
-        log.Error().Err(err).Msg("DescribeKeywordV1 - invalid argument")
+        log.Error().Err(err).Msg("CreateKeywordV1 - invalid argument")
 
         return nil, status.Error(codes.InvalidArgument, err.Error())
     }

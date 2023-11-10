@@ -7,6 +7,7 @@ import (
     "github.com/execut/ozon-keyword-api/internal/model"
     "github.com/execut/ozon-keyword-api/internal/repo"
     pb "github.com/execut/ozon-keyword-api/pkg/ozon-keyword-api"
+    "github.com/rs/zerolog"
     "gotest.tools/v3/assert"
     "log"
     "net"
@@ -18,7 +19,7 @@ import (
     "google.golang.org/grpc/test/bufconn"
 )
 
-func testServer(ctx context.Context) (pb.OzonKeywordApiServiceClient, func()) {
+func testServer() (pb.OzonKeywordApiServiceClient, func()) {
     buffer := 101024 * 1024
     lis := bufconn.Listen(buffer)
 
@@ -30,7 +31,7 @@ func testServer(ctx context.Context) (pb.OzonKeywordApiServiceClient, func()) {
         }
     }()
 
-    conn, err := grpc.DialContext(ctx, "",
+    conn, err := grpc.DialContext(context.Background(), "",
         grpc.WithContextDialer(func(context.Context, string) (net.Conn, error) {
             return lis.Dial()
         }), grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -48,6 +49,8 @@ func testServer(ctx context.Context) (pb.OzonKeywordApiServiceClient, func()) {
 
     client := pb.NewOzonKeywordApiServiceClient(conn)
 
+    zerolog.SetGlobalLevel(zerolog.Disabled)
+
     return client, closer
 }
 
@@ -63,17 +66,15 @@ func (r StubRepo) DescribeKeyword(ctx context.Context, ozonID uint64) (*model.Ke
 }
 
 func TestOzonKeywordApiServiceServer_CreateKeywordV1(t *testing.T) {
-    ctx := context.Background()
-
-    client, closer := testServer(ctx)
+    client, closer := testServer()
     defer closer()
 
     type expectation struct {
         out *pb.CreateKeywordV1Response
-        err error
+        err string
     }
 
-    errBadNameString := errors.New("rpc error: code = InvalidArgument desc = invalid CreateKeywordV1Request.Name: value length must be between 1 and 255 runes, inclusive")
+    errBadNameString := "rpc error: code = InvalidArgument desc = invalid CreateKeywordV1Request.Name: value length must be between 1 and 255 runes, inclusive"
     tests := map[string]struct {
         in       *pb.CreateKeywordV1Request
         expected expectation
@@ -84,7 +85,7 @@ func TestOzonKeywordApiServiceServer_CreateKeywordV1(t *testing.T) {
             },
             expected: expectation{
                 out: &pb.CreateKeywordV1Response{},
-                err: errors.New("rpc error: code = Unimplemented desc = CreateKeywordV1 not implemented"),
+                err: "rpc error: code = Unimplemented desc = CreateKeywordV1 not implemented",
             },
         },
         "WhenNameNil_Error": {
@@ -116,7 +117,119 @@ func TestOzonKeywordApiServiceServer_CreateKeywordV1(t *testing.T) {
 
     for scenario, tt := range tests {
         t.Run(scenario, func(t *testing.T) {
-            _, err := client.CreateKeywordV1(ctx, tt.in)
+            _, err := client.CreateKeywordV1(context.Background(), tt.in)
+            assert.Equal(t, tt.expected.err, err.Error())
+        })
+    }
+}
+
+func TestOzonKeywordApiServiceServer_DescribeKeywordV1(t *testing.T) {
+    client, closer := testServer()
+    defer closer()
+
+    type expectation struct {
+        out *pb.DescribeKeywordV1Response
+        err error
+    }
+
+    tests := map[string]struct {
+        in       *pb.DescribeKeywordV1Request
+        expected expectation
+    }{
+        "Success_Unimplemented": {
+            in: &pb.DescribeKeywordV1Request{
+                KeywordId: 123,
+            },
+            expected: expectation{
+                out: nil,
+                err: errors.New("rpc error: code = Internal desc = DescribeKeyword unimplemented"),
+            },
+        },
+        "WhenKeywordIdIsZero_Error": {
+            in: &pb.DescribeKeywordV1Request{
+                KeywordId: 0,
+            },
+            expected: expectation{
+                out: nil,
+                err: errors.New("rpc error: code = InvalidArgument desc = invalid DescribeKeywordV1Request.KeywordId: value must be greater than 0"),
+            },
+        },
+    }
+
+    for scenario, tt := range tests {
+        t.Run(scenario, func(t *testing.T) {
+            _, err := client.DescribeKeywordV1(context.Background(), tt.in)
+            assert.Equal(t, tt.expected.err.Error(), err.Error())
+        })
+    }
+}
+
+func TestOzonKeywordApiServiceServer_RemoveKeywordV1(t *testing.T) {
+    client, closer := testServer()
+    defer closer()
+
+    type expectation struct {
+        out *pb.RemoveKeywordV1Request
+        err error
+    }
+
+    tests := map[string]struct {
+        in       *pb.RemoveKeywordV1Request
+        expected expectation
+    }{
+        "Success_Unimplemented": {
+            in: &pb.RemoveKeywordV1Request{
+                KeywordId: 123,
+            },
+            expected: expectation{
+                out: nil,
+                err: errors.New("rpc error: code = Unimplemented desc = RemoveKeywordV1 not implemented"),
+            },
+        },
+        "WhenKeywordIdIsZero_Error": {
+            in: &pb.RemoveKeywordV1Request{
+                KeywordId: 0,
+            },
+            expected: expectation{
+                out: nil,
+                err: errors.New("rpc error: code = InvalidArgument desc = invalid RemoveKeywordV1Request.KeywordId: value must be greater than 0"),
+            },
+        },
+    }
+
+    for scenario, tt := range tests {
+        t.Run(scenario, func(t *testing.T) {
+            _, err := client.RemoveKeywordV1(context.Background(), tt.in)
+            assert.Equal(t, tt.expected.err.Error(), err.Error())
+        })
+    }
+}
+
+func TestOzonKeywordApiServiceServer_ListKeywordV1(t *testing.T) {
+    client, closer := testServer()
+    defer closer()
+
+    type expectation struct {
+        out *pb.ListKeywordV1Request
+        err error
+    }
+
+    tests := map[string]struct {
+        in       *pb.ListKeywordV1Request
+        expected expectation
+    }{
+        "Success_Unimplemented": {
+            in: &pb.ListKeywordV1Request{},
+            expected: expectation{
+                out: nil,
+                err: errors.New("rpc error: code = Unimplemented desc = ListKeywordV1 not implemented"),
+            },
+        },
+    }
+
+    for scenario, tt := range tests {
+        t.Run(scenario, func(t *testing.T) {
+            _, err := client.ListKeywordV1(context.Background(), tt.in)
             assert.Equal(t, tt.expected.err.Error(), err.Error())
         })
     }
