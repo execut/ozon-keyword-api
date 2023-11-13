@@ -35,7 +35,7 @@ func Test_repo(t *testing.T) {
         defer db.Close()
         rows := sqlmock.NewRows([]string{"id", "name"}).
             AddRow(expectedId, expectedName)
-        mock.ExpectQuery(regexp.QuoteMeta("SELECT id, name FROM keywords WHERE id=$1 AND !removed")).
+        mock.ExpectQuery(regexp.QuoteMeta("SELECT id, name FROM keywords WHERE id=$1 AND NOT removed")).
             WithArgs(expectedId).
             WillReturnRows(rows)
 
@@ -52,7 +52,7 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec(regexp.QuoteMeta("UPDATE keywords SET removed = $1 WHERE id = $2 AND !removed")).
+        mock.ExpectExec(regexp.QuoteMeta("UPDATE keywords SET removed = $1 WHERE id = $2 AND NOT removed")).
             WithArgs(true, expectedId).
             WillReturnResult(sqlmock.NewResult(1, 1))
 
@@ -83,9 +83,9 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec("INSERT INTO keywords").
-            WithArgs(expectedName).
-            WillReturnResult(sqlmock.NewResult(int64(expectedId), 1))
+        mock.ExpectQuery(regexp.QuoteMeta("INSERT INTO keywords (name,removed,created) VALUES ($1,$2,$3) RETURNING id")).
+            WithArgs(expectedName, false, sqlmock.AnyArg()).
+            WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(int64(expectedId)))
 
         keyword := &model.Keyword{
             Name: expectedName,
@@ -105,8 +105,8 @@ func Test_repo(t *testing.T) {
         sut, mock, db := newSut(t)
         defer db.Close()
         expectedError := errors.New("empty name")
-        mock.ExpectExec("INSERT INTO keywords").
-            WillReturnResult(sqlmock.NewErrorResult(expectedError))
+        mock.ExpectQuery("INSERT INTO keywords").
+            WillReturnError(expectedError)
 
         keyword := &model.Keyword{}
         _, err := sut.Add(context.Background(), keyword)
@@ -118,7 +118,7 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords WHERE !removed LIMIT 50 OFFSET 100`)).
+        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords WHERE NOT removed LIMIT 50 OFFSET 100`)).
             WillReturnRows(sqlmock.
                 NewRows([]string{"id", "name"}).
                 AddRow(expectedId, expectedName).
