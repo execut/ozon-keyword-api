@@ -63,7 +63,9 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec(regexp.QuoteMeta("DELETE FROM keywords")).WithArgs(expectedId).WillReturnResult(sqlmock.NewResult(1, 0))
+        mock.ExpectExec(regexp.QuoteMeta("DELETE FROM keywords")).
+            WithArgs(expectedId).
+            WillReturnResult(sqlmock.NewResult(1, 0))
 
         err := sut.Remove(context.Background(), expectedId)
 
@@ -105,6 +107,38 @@ func Test_repo(t *testing.T) {
 
         keyword := &model.Keyword{}
         _, err := sut.Add(context.Background(), keyword)
+
+        assert.ErrorIs(t, err, expectedError)
+    })
+
+    t.Run("ListWithOffset0_returnTwoKeywords", func(t *testing.T) {
+        t.Parallel()
+        sut, mock, db := newSut(t)
+        defer db.Close()
+        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords LIMIT 50 OFFSET 100`)).
+            WillReturnRows(sqlmock.
+                NewRows([]string{"id", "name"}).
+                AddRow(expectedId, expectedName).
+                AddRow(456, "test name2"))
+
+        keywords, err := sut.List(context.Background(), 50, 100)
+
+        assert.NilError(t, err)
+        assert.Equal(t, 2, len(keywords))
+        keyword := keywords[0]
+        assert.Equal(t, expectedId, keyword.ID)
+        assert.Equal(t, expectedName, keyword.Name)
+    })
+
+    t.Run("ListWithError_returnError", func(t *testing.T) {
+        t.Parallel()
+        sut, mock, db := newSut(t)
+        defer db.Close()
+        expectedError := errors.New("failed select")
+        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords LIMIT 50 OFFSET 100`)).
+            WillReturnError(expectedError)
+
+        _, err := sut.List(context.Background(), 50, 100)
 
         assert.ErrorIs(t, err, expectedError)
     })

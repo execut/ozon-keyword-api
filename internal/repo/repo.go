@@ -16,7 +16,7 @@ var ErrKeywordNotFound = errors.New("keyword not found")
 type Repo interface {
     Get(ctx context.Context, keywordID uint64) (*model.Keyword, error)
     Add(ctx context.Context, keyword *model.Keyword) (uint64, error)
-    //List(ctx context.Context, limit uint64, cursor uint64) ([]model.Keyword, error)
+    List(ctx context.Context, limit uint64, cursor uint64) ([]model.Keyword, error)
     Remove(ctx context.Context, keywordID uint64) error
 }
 
@@ -80,4 +80,25 @@ func (r *repo) Add(ctx context.Context, keyword *model.Keyword) (uint64, error) 
     keyword.ID = uint64(id)
 
     return keyword.ID, nil
+}
+
+func (r *repo) List(ctx context.Context, limit uint64, cursor uint64) ([]model.Keyword, error) {
+    query := squirrel.Select("id", "name").
+        From("keywords").
+        Limit(limit).
+        Offset(cursor).
+        RunWith(r.db)
+    list, err := query.
+        QueryContext(ctx)
+    if err != nil {
+        return nil, err
+    }
+    var result = []model.Keyword{}
+    for list.Next() {
+        keyword := model.Keyword{}
+        list.Scan(&keyword.ID, &keyword.Name)
+        result = append(result, keyword)
+    }
+
+    return result, nil
 }
