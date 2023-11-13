@@ -3,6 +3,7 @@ module github.com/execut/ozon-keyword-api
 go 1.21.4
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/execut/ozon-keyword-api/pkg/ozon-keyword-api v0.0.0-00010101000000-000000000000
 	github.com/gammazero/workerpool v1.1.3
