@@ -35,6 +35,7 @@ func (r *repo) Get(ctx context.Context, keywordID uint64) (*model.Keyword, error
         Select("id, name").
         From("keywords").
         Where("id=$1", keywordID).
+        Where("!removed").
         RunWith(r.db).
         QueryRowContext(ctx)
     keyword := &model.Keyword{}
@@ -49,7 +50,8 @@ func (r *repo) Get(ctx context.Context, keywordID uint64) (*model.Keyword, error
 func (r *repo) Remove(ctx context.Context, keywordID uint64) error {
     result, err := squirrel.
         Delete("keywords").
-        Where(squirrel.Eq{"id": keywordID}).
+        Where("id=$1", keywordID).
+        Where("!removed").
         PlaceholderFormat(squirrel.Dollar).
         RunWith(r.db).
         ExecContext(ctx)
@@ -85,6 +87,7 @@ func (r *repo) Add(ctx context.Context, keyword *model.Keyword) (uint64, error) 
 func (r *repo) List(ctx context.Context, limit uint64, cursor uint64) ([]model.Keyword, error) {
     query := squirrel.Select("id", "name").
         From("keywords").
+        Where("!removed").
         Limit(limit).
         Offset(cursor).
         RunWith(r.db)

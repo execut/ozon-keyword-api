@@ -35,7 +35,9 @@ func Test_repo(t *testing.T) {
         defer db.Close()
         rows := sqlmock.NewRows([]string{"id", "name"}).
             AddRow(expectedId, expectedName)
-        mock.ExpectQuery("SELECT id, name FROM keywords").WillReturnRows(rows)
+        mock.ExpectQuery(regexp.QuoteMeta("SELECT id, name FROM keywords WHERE id=$1 AND !removed")).
+            WithArgs(expectedId).
+            WillReturnRows(rows)
 
         keyword, err := sut.Get(context.Background(), expectedId)
 
@@ -50,7 +52,9 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec(regexp.QuoteMeta("DELETE FROM keywords")).WithArgs(expectedId).WillReturnResult(sqlmock.NewResult(1, 1))
+        mock.ExpectExec(regexp.QuoteMeta("DELETE FROM keywords WHERE id=$1 AND !removed")).
+            WithArgs(expectedId).
+            WillReturnResult(sqlmock.NewResult(1, 1))
 
         err := sut.Remove(context.Background(), expectedId)
 
@@ -63,7 +67,7 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec(regexp.QuoteMeta("DELETE FROM keywords")).
+        mock.ExpectExec("DELETE").
             WithArgs(expectedId).
             WillReturnResult(sqlmock.NewResult(1, 0))
 
@@ -115,7 +119,7 @@ func Test_repo(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords LIMIT 50 OFFSET 100`)).
+        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords WHERE !removed LIMIT 50 OFFSET 100`)).
             WillReturnRows(sqlmock.
                 NewRows([]string{"id", "name"}).
                 AddRow(expectedId, expectedName).
@@ -135,7 +139,7 @@ func Test_repo(t *testing.T) {
         sut, mock, db := newSut(t)
         defer db.Close()
         expectedError := errors.New("failed select")
-        mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, name FROM keywords LIMIT 50 OFFSET 100`)).
+        mock.ExpectQuery(regexp.QuoteMeta(`SELECT`)).
             WillReturnError(expectedError)
 
         _, err := sut.List(context.Background(), 50, 100)
