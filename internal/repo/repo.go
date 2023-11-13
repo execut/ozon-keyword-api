@@ -15,8 +15,8 @@ var ErrKeywordNotFound = errors.New("keyword not found")
 // Repo is DAO for Keyword
 type Repo interface {
     Get(ctx context.Context, keywordID uint64) (*model.Keyword, error)
-    //Add(keyword *model.Keyword) (uint64, error)
-    //List(limit uint64, cursor uint64) ([]model.Keyword, error)
+    Add(ctx context.Context, keyword *model.Keyword) (uint64, error)
+    //List(ctx context.Context, limit uint64, cursor uint64) ([]model.Keyword, error)
     Remove(ctx context.Context, keywordID uint64) error
 }
 
@@ -64,4 +64,20 @@ func (r *repo) Remove(ctx context.Context, keywordID uint64) error {
     }
 
     return nil
+}
+
+func (r *repo) Add(ctx context.Context, keyword *model.Keyword) (uint64, error) {
+    result, _ := squirrel.Insert("keywords").
+        Columns("name").
+        Values(keyword.Name).
+        Suffix(" RETURNS id").
+        RunWith(r.db).
+        Exec()
+    id, err := result.LastInsertId()
+    if err != nil {
+        return 0, err
+    }
+    keyword.ID = uint64(id)
+
+    return keyword.ID, nil
 }
