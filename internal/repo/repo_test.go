@@ -48,12 +48,12 @@ func Test_repo(t *testing.T) {
             t.Errorf("there were unfulfilled expectations: %s", err)
         }
     })
-    t.Run("DeleteExistKeyword_success", func(t *testing.T) {
+    t.Run("RemoveExistKeyword_success", func(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec(regexp.QuoteMeta("DELETE FROM keywords WHERE id=$1 AND !removed")).
-            WithArgs(expectedId).
+        mock.ExpectExec(regexp.QuoteMeta("UPDATE keywords SET removed = $1 WHERE id = $2 AND !removed")).
+            WithArgs(true, expectedId).
             WillReturnResult(sqlmock.NewResult(1, 1))
 
         err := sut.Remove(context.Background(), expectedId)
@@ -63,12 +63,11 @@ func Test_repo(t *testing.T) {
             t.Errorf("there were unfulfilled expectations: %s", err)
         }
     })
-    t.Run("DeleteNonExistentKeyword_failed", func(t *testing.T) {
+    t.Run("RemoveNonExistentKeyword_failed", func(t *testing.T) {
         t.Parallel()
         sut, mock, db := newSut(t)
         defer db.Close()
-        mock.ExpectExec("DELETE").
-            WithArgs(expectedId).
+        mock.ExpectExec("UPDATE").
             WillReturnResult(sqlmock.NewResult(1, 0))
 
         err := sut.Remove(context.Background(), expectedId)

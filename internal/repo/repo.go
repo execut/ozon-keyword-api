@@ -49,8 +49,9 @@ func (r *repo) Get(ctx context.Context, keywordID uint64) (*model.Keyword, error
 
 func (r *repo) Remove(ctx context.Context, keywordID uint64) error {
     result, err := squirrel.
-        Delete("keywords").
-        Where("id=$1", keywordID).
+        Update("keywords").
+        Set("removed", true).
+        Where(squirrel.Eq{"id": keywordID}).
         Where("!removed").
         PlaceholderFormat(squirrel.Dollar).
         RunWith(r.db).
