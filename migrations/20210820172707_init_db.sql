@@ -11,9 +11,9 @@ CREATE TABLE keywords
 CREATE TABLE keyword_events
 (
     id         BIGSERIAL PRIMARY KEY,
-    keyword_id BIGSERIAL    NOT NULL REFERENCES keywords,
-    type       varchar(255) not null,
-    status     varchar(255),
+    keyword_id BIGINT    NOT NULL REFERENCES keywords,
+    type       smallint not null,
+    status     smallint,
     payload    jsonb,
     updated timestamp
 );

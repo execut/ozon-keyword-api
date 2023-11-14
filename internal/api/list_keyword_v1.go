@@ -13,7 +13,7 @@ func (o *ozonAPI) ListKeywordV1(ctx context.Context, req *ozon_keyword_api.ListK
         return nil, err
     }
 
-    result := []*ozon_keyword_api.Keyword{}
+    var result []*ozon_keyword_api.Keyword
     for _, keyword := range keywords {
         result = append(result, &ozon_keyword_api.Keyword{
             Id:   keyword.ID,

@@ -2,6 +2,7 @@ package producer
 
 import (
     "context"
+    "fmt"
     "github.com/execut/ozon-keyword-api/internal/app/repo"
     "github.com/execut/ozon-keyword-api/internal/app/sender"
     "github.com/execut/ozon-keyword-api/internal/model"
@@ -91,12 +92,14 @@ func (p *producer) Close() {
 
 func (p *producer) processFailedJobs() {
     p.sendIdsToRepo(p.failedEventsIds, func(ids []uint64) {
+        fmt.Println("Failed to send events %v", ids)
         p.repo.Unlock(ids)
     })
 }
 
 func (p *producer) processSuccessJobs() {
     p.sendIdsToRepo(p.successEventsIds, func(ids []uint64) {
+        fmt.Println("Success to send events %v", ids)
         p.repo.Remove(ids)
     })
 }

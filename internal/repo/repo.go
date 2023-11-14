@@ -22,13 +22,12 @@ type Repo interface {
 }
 
 type repo struct {
-    db        *sqlx.DB
-    batchSize uint
+    db *sqlx.DB
 }
 
 // NewRepo returns Repo interface
-func NewRepo(db *sqlx.DB, batchSize uint) Repo {
-    return &repo{db: db, batchSize: batchSize}
+func NewRepo(db *sqlx.DB) Repo {
+    return &repo{db: db}
 }
 
 func (r *repo) Get(ctx context.Context, keywordID uint64) (*model.Keyword, error) {
@@ -100,7 +99,10 @@ func (r *repo) List(ctx context.Context, limit uint64, cursor uint64) ([]model.K
     var result = []model.Keyword{}
     for list.Next() {
         keyword := model.Keyword{}
-        list.Scan(&keyword.ID, &keyword.Name)
+        err := list.Scan(&keyword.ID, &keyword.Name)
+        if err != nil {
+            return nil, err
+        }
         result = append(result, keyword)
     }
 

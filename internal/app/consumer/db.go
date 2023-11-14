@@ -2,6 +2,7 @@ package consumer
 
 import (
     "context"
+    "fmt"
     "github.com/execut/ozon-keyword-api/internal/app/repo"
     "github.com/execut/ozon-keyword-api/internal/model"
     "sync"
@@ -38,7 +39,11 @@ func (c *consumer) Start() {
         go func(ticker *time.Ticker) {
             defer c.wg.Done()
             for {
-                events, _ := c.repo.Lock(c.batchSize)
+                events, err := c.repo.Lock(c.batchSize)
+                if err != nil {
+                    fmt.Println(err)
+                }
+
                 for i, _ := range events {
                     c.eventCh <- &events[i]
                 }
