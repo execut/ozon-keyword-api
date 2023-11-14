@@ -61,8 +61,19 @@ func newStubKeywordRepo() repo.Repo {
 type StubRepo struct {
 }
 
-func (r StubRepo) DescribeKeyword(ctx context.Context, ozonID uint64) (*model.Keyword, error) {
-    return nil, errors.New("DescribeKeyword unimplemented")
+func (StubRepo) Get(ctx context.Context, ozonID uint64) (*model.Keyword, error) {
+    return nil, errors.New("Get unimplemented")
+}
+
+func (StubRepo) Add(ctx context.Context, keyword *model.Keyword) (uint64, error) {
+    return 0, errors.New("Get unimplemented")
+}
+
+func (StubRepo) List(ctx context.Context, limit uint64, cursor uint64) ([]model.Keyword, error) {
+    return nil, errors.New("Get unimplemented")
+}
+func (StubRepo) Remove(ctx context.Context, keywordID uint64) error {
+    return errors.New("Get unimplemented")
 }
 
 func TestOzonKeywordApiServiceServer_CreateKeywordV1(t *testing.T) {
@@ -142,7 +153,7 @@ func TestOzonKeywordApiServiceServer_DescribeKeywordV1(t *testing.T) {
             },
             expected: expectation{
                 out: nil,
-                err: errors.New("rpc error: code = Internal desc = DescribeKeyword unimplemented"),
+                err: errors.New("rpc error: code = Internal desc = Get unimplemented"),
             },
         },
         "WhenKeywordIdIsZero_Error": {

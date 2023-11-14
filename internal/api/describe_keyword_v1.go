@@ -19,7 +19,7 @@ func (o *ozonAPI) DescribeKeywordV1(
         return nil, status.Error(codes.InvalidArgument, err.Error())
     }
 
-    keyword, err := o.repo.DescribeKeyword(ctx, req.KeywordId)
+    keyword, err := o.repo.Get(ctx, req.KeywordId)
     if err != nil {
         log.Error().Err(err).Msg("DescribeKeywordV1 -- failed")
 

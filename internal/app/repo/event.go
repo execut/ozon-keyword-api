@@ -2,11 +2,12 @@ package repo
 
 import (
     "errors"
-    "fmt"
+    "github.com/Masterminds/squirrel"
     "github.com/execut/ozon-keyword-api/internal/model"
-    "sync"
-    "time"
+    "github.com/jmoiron/sqlx"
 )
+
+var psql = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 
 type EventRepo interface {
     Lock(n uint64) ([]model.KeywordEvent, error)
@@ -16,69 +17,119 @@ type EventRepo interface {
     Remove(eventIDs []uint64) error
 }
 
+type EventDbRepo struct {
+    db *sqlx.DB
+}
+
+func (r *EventDbRepo) Lock(n uint64) ([]model.KeywordEvent, error) {
+    tx, err := r.db.Beginx()
+    if err != nil {
+        return nil, err
+    }
+    rows, err := psql.Select("id", "keyword_id", "type").
+        From("keyword_events").
+        Where("status is null").
+        OrderBy("id").
+        Limit(n).
+        RunWith(r.db).Query()
+    if err != nil {
+        return nil, err
+    }
+
+    var events []model.KeywordEvent
+    var ids = []uint64{}
+    for rows.Next() {
+        event := model.KeywordEvent{}
+        var keywordId uint64
+        err := rows.Scan(&event.ID, &keywordId, &event.Type)
+        if err != nil {
+            return nil, err
+        }
+
+        event.Entity = &model.Keyword{ID: keywordId}
+        events = append(events, event)
+        ids = append(ids, event.ID)
+    }
+
+    query := psql.
+        Update("keyword_events").
+        Set("status", model.Deferred).
+        Where(squirrel.Eq{"id": ids}).
+        RunWith(r.db)
+    _, err = query.
+        Exec()
+
+    if err != nil {
+        return nil, err
+    }
+
+    tx.Commit()
+
+    return events, nil
+}
+
+func (r *EventDbRepo) Unlock(eventIDs []uint64) error {
+    query := psql.
+        Update("keyword_events").
+        Set("status", nil).
+        Where(squirrel.Eq{"id": eventIDs}).
+        RunWith(r.db)
+    _, err := query.
+        Exec()
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
+func (r *EventDbRepo) Add(events []model.KeywordEvent) error {
+    tx, err := r.db.Beginx()
+    if err != nil {
+        return err
+    }
+
+    for _, event := range events {
+        query := psql.
+            Insert("keyword_events").
+            Columns("keyword_id", "type").
+            Suffix("RETURNING id").
+            RunWith(r.db).
+            Values(event.Entity.ID, event.Type)
+        err = query.
+            Scan(&event.ID)
+        if err != nil {
+            tx.Rollback()
+            return err
+        }
+    }
+
+    tx.Commit()
+
+    return nil
+}
+
+func (r *EventDbRepo) Remove(eventIDs []uint64) error {
+    query := psql.
+        Update("keyword_events").
+        Set("status", model.Processed).
+        Where(squirrel.Eq{"id": eventIDs}).
+        RunWith(r.db)
+    _, err := query.
+        Exec()
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
 var ErrEventNotFound error = errors.New("Event not found")
 
 var ErrNoMoreEvents error = errors.New("No more events for lock")
 
-func NewStubEventRepo(eventsCount uint64, lockDuration time.Duration) EventRepo {
-    eventsMap := make([]model.KeywordEvent, eventsCount)
-    for i := uint64(0); i < eventsCount; i++ {
-        keyword := model.NewTestKeyword((i + 1) * 100)
-        keywordEvent := model.NewTestKeywordEvent(i+1, &keyword)
-        eventsMap[i] = keywordEvent
+func NewEventRepo(db *sqlx.DB) EventRepo {
+    return &EventDbRepo{
+        db: db,
     }
-
-    return &StubEventRepo{mutex: sync.Mutex{}, currentN: 0, lockedEvents: make(map[uint64]bool), events: eventsMap, lockDuration: lockDuration}
-}
-
-type StubEventRepo struct {
-    events       []model.KeywordEvent
-    lockedEvents map[uint64]bool
-    mutex        sync.Mutex
-    currentN     uint64
-    lockDuration time.Duration
-}
-
-func (r *StubEventRepo) Lock(n uint64) ([]model.KeywordEvent, error) {
-    time.Sleep(r.lockDuration)
-    r.mutex.Lock()
-    defer r.mutex.Unlock()
-    var lockedEvents []model.KeywordEvent
-    l := uint64(len(r.events))
-    if l == 0 {
-        return nil, ErrNoMoreEvents
-    }
-
-    if l < n {
-        n = l
-    }
-
-    lockedEvents = r.events[:n]
-    r.events = r.events[n:]
-    for _, event := range lockedEvents {
-        r.lockedEvents[event.ID] = true
-    }
-
-    return lockedEvents, nil
-}
-
-func (r *StubEventRepo) Unlock(eventIDs []uint64) error {
-    r.mutex.Lock()
-    defer r.mutex.Unlock()
-    for _, n := range eventIDs {
-        if _, ok := r.lockedEvents[n]; !ok {
-            return ErrEventNotFound
-        }
-    }
-    return nil
-}
-
-func (r *StubEventRepo) Add(event []model.KeywordEvent) error {
-    fmt.Println("Added events", event)
-    return nil
-}
-
-func (r *StubEventRepo) Remove(eventIDs []uint64) error {
-    fmt.Println("Removed events", eventIDs)
-    return nil
 }

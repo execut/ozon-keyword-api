@@ -2,6 +2,7 @@ package api
 
 import (
     "context"
+    "github.com/execut/ozon-keyword-api/internal/model"
     "github.com/execut/ozon-keyword-api/pkg/ozon-keyword-api"
     "github.com/rs/zerolog/log"
     "google.golang.org/grpc/codes"
@@ -17,5 +18,14 @@ func (o *ozonAPI) CreateKeywordV1(ctx context.Context, req *ozon_keyword_api.Cre
         return nil, status.Error(codes.InvalidArgument, err.Error())
     }
 
-    return nil, status.Error(codes.Unimplemented, "CreateKeywordV1 not implemented")
+    keyword := model.Keyword{
+        Name: req.GetName(),
+    }
+
+    _, err := o.repo.Add(ctx, &keyword)
+    if err != nil {
+        return nil, err
+    }
+
+    return &ozon_keyword_api.CreateKeywordV1Response{Value: &ozon_keyword_api.Keyword{Id: keyword.ID, Name: keyword.Name}}, nil
 }
